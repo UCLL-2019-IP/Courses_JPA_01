@@ -10,7 +10,6 @@ import javax.validation.constraints.Size;
 
 @Entity
 public class Course {
-    @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
