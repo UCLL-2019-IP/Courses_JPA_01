@@ -98,7 +98,13 @@ public class MyService { // be careful, don't call this class "Service"! Conflic
         int weekId = day.getYearAndWeekNumber();
         Week week = weekRepository.findById(weekId).orElseThrow(IllegalArgumentException::new);
         week.deleteDay(day);
-        weekRepository.save(week);
+        // check if the week still contains days, if not, delete it!
+        if(week.weekIsEmpty()){
+            weekRepository.delete(week);
+        }
+        else {
+            weekRepository.save(week); // need to save week to see the changes in the db
+        }
         dayRepository.deleteById(date);
     }
 

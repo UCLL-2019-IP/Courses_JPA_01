@@ -39,5 +39,7 @@ public class Week {
     public void deleteDay(Day day) {
         this.week.remove(day.getDayOfWeek());
     }
+
+    public boolean weekIsEmpty(){ return week.isEmpty(); }
 }
 
