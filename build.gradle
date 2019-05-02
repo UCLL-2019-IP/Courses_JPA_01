@@ -53,10 +53,10 @@ repositories {
 
 version = '1.0.0-SNAPSHOT' // default is empty
 // a java project adds properties of its own:
-sourceCompatibility = 1.8 // version to use when compiling source
+sourceCompatibility = '1.8' // version to use when compiling source
 // version to use when generating the compiled class files,
 // default same as sourceCompatibility ( so you can usually omit it)
-targetCompatibility = 1.8
+targetCompatibility = '1.8'
 
 
 // ################################################################
@@ -91,6 +91,15 @@ managed by the spring boot bill of materials (aka BOM).
 // ################################################################
 
 dependencies {
+    // The JAXB APIs are considered to be Java EE APIs, and therefore are no longer
+    // contained on the default class path in Java SE 9.
+    // In Java 11 they are completely removed from the JDK.
+    // But apparently Spring requires these in this case, if you want to make a JAR file.
+    // See https://stackoverflow.com/questions/43574426
+    // ==> Quick & dirty fix: java -jar --add-modules java.xml.bind -jar courses-0.1.0.jar
+    // ==> Better fix, add this, and make a the JAR again, so it contains the file:
+    compile "javax.xml.bind:jaxb-api:2.3.0"
+
     // needed for Spring Boot -> embedded tomcat
     compile("org.springframework.boot:spring-boot-starter-web")
     // needed because we use jsp
